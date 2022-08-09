@@ -73,6 +73,7 @@ client.on('messageCreate', (message) => {
             message.reply(`Resultado: ${result}`);    
         } catch (err) {
             message.channel.send('Houve algum erro.');
+            return;
         }
     }
 
@@ -94,7 +95,7 @@ client.on('messageCreate', (message) => {
     
         } catch (err)  {
             message.channel.send('Houve algum erro.');
-            client.login(TOKEN);
+            return;
         }
 
     }
