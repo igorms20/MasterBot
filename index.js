@@ -101,4 +101,8 @@ client.on('messageDelete', (message) => {
     message.channel.send(`A mensagem apagada foi: \n${message.content}`);
 })
 
+client.on('error', () => {
+    client.login(TOKEN);
+})
+
 client.login(TOKEN);
