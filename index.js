@@ -79,11 +79,12 @@ client.on('messageCreate', (message) => {
 
     if (message.content.startsWith('!conv')) {
         const msgContent = message.content;
-        const base = msgContent.split(' ')[1].toUpperCase();
-        const target = msgContent.split(' ')[2].toUpperCase();
-        const amount = msgContent.split(' ')[3];
-
+        
         try {
+            const base = msgContent.split(' ')[1].toUpperCase();
+            const target = msgContent.split(' ')[2].toUpperCase();
+            const amount = msgContent.split(' ')[3];
+
             if (!amount) {
                 const resp = cc.convertNoAmount(base, target);
                 resp.then((value) => {message.reply(value.toFixed(2).toString())});   
