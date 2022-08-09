@@ -1,7 +1,9 @@
-const {token, ERApiKey} = require('./config.json');
+// const {token, ERApiKey} = require('./config.json');
 const { Client, GatewayIntentBits } = require('discord.js');
+require('dotenv').config();
+const {TOKEN, API_KEY} = process.env
 const CurrencyConverter = require('./src/currency-converter');
-const cc = new CurrencyConverter(ERApiKey);
+const cc = new CurrencyConverter(API_KEY);
 
 
 const client = new Client({intents: [
@@ -99,4 +101,4 @@ client.on('messageDelete', (message) => {
     message.channel.send(`A mensagem apagada foi: \n${message.content}`);
 })
 
-client.login(token);
+client.login(TOKEN);
