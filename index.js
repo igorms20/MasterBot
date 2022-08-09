@@ -82,14 +82,20 @@ client.on('messageCreate', (message) => {
         const target = msgContent.split(' ')[2].toUpperCase();
         const amount = msgContent.split(' ')[3];
 
-        if (!amount) {
-            const resp = cc.convertNoAmount(base, target);
-            resp.then((value) => {message.reply(value.toFixed(2).toString())});   
-            return;
-        } 
-            
-        const resp = cc.convert(base, target, amount);
-        resp.then((value) => {message.reply(value.toFixed(2).toString())});      
+        try {
+            if (!amount) {
+                const resp = cc.convertNoAmount(base, target);
+                resp.then((value) => {message.reply(value.toFixed(2).toString())});   
+                return;
+            } 
+                
+            const resp = cc.convert(base, target, amount);
+            resp.then((value) => {message.reply(value.toFixed(2).toString())});      
+    
+        } catch (err)  {
+            message.channel.send('Houve algum erro.');
+            client.login(TOKEN);
+        }
 
     }
     
@@ -101,8 +107,5 @@ client.on('messageDelete', (message) => {
     message.channel.send(`A mensagem apagada foi: \n${message.content}`);
 })
 
-client.on('error', () => {
-    client.login(TOKEN);
-})
 
 client.login(TOKEN);
