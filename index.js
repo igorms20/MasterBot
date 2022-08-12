@@ -1,9 +1,10 @@
 // const {token, ERApiKey} = require('./config.json');
 const { Client, GatewayIntentBits } = require('discord.js');
 require('dotenv').config();
-const {TOKEN, API_KEY} = process.env
-const CurrencyConverter = require('./src/currency-converter');
-const cc = new CurrencyConverter(API_KEY);
+const {TOKEN} = process.env
+
+const calc = require('./src/bot-commands/calc');
+const conv = require('./src/bot-commands/conv');
 
 
 const client = new Client({intents: [
@@ -60,45 +61,12 @@ client.on('messageCreate', (message) => {
         message.channel.send(`Olá ${message.author}! Como vai?`);
     }
 
-    if (message.content.startsWith('!calc') ) {
-        const fullMsg = message.content;
-        const expression = fullMsg.split(' ')[1];        
-
-        try {
-            const result = eval(expression);
-            if (!expression || !result) {
-                message.channel.send('Expressão inválida.');
-                return;
-            }
-            message.reply(`Resultado: ${result}`);    
-        } catch (err) {
-            message.channel.send('Houve algum erro.');
-            return;
-        }
-    }
+    if (message.content.startsWith('!calc')) {
+        calc(message);
+    }        
 
     if (message.content.startsWith('!conv')) {
-        const msgContent = message.content;
-        
-        try {
-            const base = msgContent.split(' ')[1].toUpperCase();
-            const target = msgContent.split(' ')[2].toUpperCase();
-            const amount = msgContent.split(' ')[3];
-
-            if (!amount) {
-                const resp = cc.convertNoAmount(base, target);
-                resp.then((value) => {message.reply(value.toFixed(2).toString())});   
-                return;
-            } 
-                
-            const resp = cc.convert(base, target, amount);
-            resp.then((value) => {message.reply(value.toFixed(2).toString())});      
-    
-        } catch (err)  {
-            message.channel.send('Houve algum erro.');
-            return;
-        }
-
+        conv(message);
     }
     
 })
