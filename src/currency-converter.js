@@ -6,8 +6,6 @@ class CurrencyConverter {
         this.apiKey = apiKey;
     }
 
-    // static apiKey = 'f29e5aa09b1ee04165aa846e';
-
     async convert(base, target, amount) {
         let response, result;
         try {
